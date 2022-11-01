@@ -42,8 +42,10 @@ public class EmployeeDaoImpl implements EmployeeDao{
         try {
             Connection connection = DB_Config.getConnection();
             Statement statement = connection.createStatement();
-            result = statement.executeUpdate("UPDATE employeeeTable SET employeeName = 'Sagnik', employeeAddress= 'Japan'" +
-                    "WHERE emplyoeeId= 1");
+
+
+           result = statement.executeUpdate("UPDATE employeeeTable SET employeeName = 'Sagnik', employeeAddress= 'Japan'" +
+                   "WHERE emplyoeeId= 1");
             if(result > 0){
                 System.out.println("Successfully updated");
             }else{

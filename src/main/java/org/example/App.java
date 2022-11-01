@@ -29,11 +29,14 @@ public class App
         String phone = scanner.nextLine();
         System.out.println("Enter address");
         String address = scanner.nextLine();
+
        Employee employee = new Employee(id,name,email,phone,address);
+
         EmployeeDao employeeDao = new EmployeeDaoImpl();
         int generatedKey = 0;
 
         try {
+            //insert data into the database
             generatedKey = employeeDao.addEmployee(employee);
 
 
@@ -44,16 +47,20 @@ public class App
         }
         System.out.println("generatedKey =" + generatedKey);
 
+
+       // Update Database
+       int updatekey = employeeDao.updateEmployee();
+       System.out.println(updatekey);
+
+
+       //Fetch all the data from database
        List<Employee> emp = employeeDao.getEmployee();
         for(Employee employee2 : emp){
             System.out.println(employee2);
         }
 
-     int updatekey = employeeDao.updateEmployee();
-       System.out.println(updatekey);
-    }
-
-//
 
     }
-//
+
+}
+
