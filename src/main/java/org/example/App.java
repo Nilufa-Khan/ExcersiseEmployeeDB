@@ -4,7 +4,9 @@ import org.example.dao.EmployeeDao;
 import org.example.dao.EmployeeDaoImpl;
 import org.example.model.Employee;
 
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 
 /**
  * Hello world!
@@ -13,12 +15,45 @@ import java.util.List;
 public class App 
 {
     public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
+   {
+//        System.out.println( "Hello World!" );
+      Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter id");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("Enter employee name");
+        String name = scanner.nextLine();
+        System.out.println("Enter email");
+        String email = scanner.nextLine();
+        System.out.println("Enter phone");
+        String phone = scanner.nextLine();
+        System.out.println("Enter address");
+        String address = scanner.nextLine();
+       Employee employee = new Employee(id,name,email,phone,address);
         EmployeeDao employeeDao = new EmployeeDaoImpl();
-//        employeeDao.addEmployee();
-//        employeeDao.updateEmployee();
-        List<Employee> emp = employeeDao.getEmployee();
-        System.out.println(emp);
+        int generatedKey = 0;
+
+        try {
+            generatedKey = employeeDao.addEmployee(employee);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("generatedKey =" + generatedKey);
+
+       List<Employee> emp = employeeDao.getEmployee();
+        for(Employee employee2 : emp){
+            System.out.println(employee2);
+        }
+
+     int updatekey = employeeDao.updateEmployee();
+       System.out.println(updatekey);
     }
-}
+
+//
+
+    }
+//

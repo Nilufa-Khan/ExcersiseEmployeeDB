@@ -3,7 +3,7 @@ package org.example.config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.sql.*;
+
 
 public class DB_Config {
     public static Connection getConnection() throws ClassNotFoundException, SQLException {

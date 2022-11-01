@@ -3,35 +3,37 @@ package org.example.dao;
 import org.example.config.DB_Config;
 import org.example.model.Employee;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeDaoImpl implements EmployeeDao{
 
 
-    public boolean addEmployee() {
+    public int addEmployee(Employee employee) throws SQLException, ClassNotFoundException {
 
 
-        try {
+            int generatedId = 0;
             Connection connection = DB_Config.getConnection();
-            Statement statement = connection.createStatement();
-            int result = statement.executeUpdate("insert into employeeeTable (employeeName,employeeEmail,employeePhone,employeeAddress) value('Monalisa','mona@152gmail.com','7839567890','Punjab')");
-            if(result > 0){
-                System.out.println("Successfully inserted");
-            }else{
-                System.out.println("Not inserted");
+            String sql = "insert into employeeeTable (employeeName,employeeEmail,employeePhone,employeeAddress) " +
+                    "values(?,?,?,?)";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, employee.getEmployeeName());
+            preparedStatement.setString(2, employee.getEmployeeEmail());
+            preparedStatement.setString(3, employee.getEmployeePhone());
+            preparedStatement.setString(4, employee.getEmployeeAddress());
+
+            int rows = preparedStatement.executeUpdate();
+            if (rows == 1) {
+                ResultSet resultSet = preparedStatement.getGeneratedKeys();
+                if (resultSet.next()) {
+                    generatedId = resultSet.getInt(1);
+                }
+
             }
-            connection.close();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-       return true;
+            return generatedId;
+
+
     }
 
     public int updateEmployee() {
